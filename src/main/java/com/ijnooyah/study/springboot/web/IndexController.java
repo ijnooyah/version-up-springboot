@@ -1,5 +1,7 @@
 package com.ijnooyah.study.springboot.web;
 
+import com.ijnooyah.study.springboot.config.auth.LoginUser;
+import com.ijnooyah.study.springboot.config.auth.dto.SessionUser;
 import com.ijnooyah.study.springboot.service.PostsService;
 import com.ijnooyah.study.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +17,15 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-//    private final HttpSession httpSession;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model/*, @LoginUser SessionUser user*/) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
 
-//        if (user != null) {
-//            model.addAttribute("loginUserName", user.getName());
-//        }
+        if (user != null) {
+            model.addAttribute("loginUserName", user.getName());
+        }
         return "index";
     }
 
